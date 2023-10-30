@@ -82,11 +82,23 @@ extension Task {
             return decodedTasks
         }else{
             return [] // 👈 replace with returned saved tasks
+        }
     }
 
     // Add a new task or update an existing task with the current task.
     func save() {
 
         // TODO: Save the current task
+        var savedTasks = Task.getTasks()
+        if let i = savedTasks.firstIndex(where: {$0.id == self.id}){
+            //update task
+            savedTasks.remove(at: i)
+            savedTasks.insert(self, at: i)
+        }else{
+            savedTasks.append(self)
+        }
+        
+        Task.save(savedTasks)
+        
     }
 }
